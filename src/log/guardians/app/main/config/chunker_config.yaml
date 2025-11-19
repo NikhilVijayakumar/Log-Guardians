@@ -1,0 +1,35 @@
+# config/chunker_config.yaml
+active_profile: 'hpc'
+input_log_file: 'data/logs/HPC_2k.log'
+output_chunk_dir: '.LogGuardians/output/logs'
+max_entries_per_chunk: 10
+
+log_profiles:
+  syslog:
+    description: "Linux, OpenSSH, etc. (e.g., Jun 14 15:16:01 ...)"
+    # e.g. "Jun 14 15:16:01"
+    log_start_regex: '^[A-Za-z]{3}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2}'
+
+  java_bigdata:
+    description: "Hadoop, Zookeeper (e.g., 2015-10-18 18:01:47,978 ...)"
+    log_start_regex: '^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2},\d{3}'
+
+  apache:
+    description: "Apache log (e.g., [Sun Dec 04 04:47:44 2005] ...)"
+    log_start_regex: '^\[[A-Za-z]{3}\s+[A-Za-z]{3}\s+\d{2}'
+
+  proxifier:
+    description: "Proxifier log (e.g., [10.30 16:49:06] ...)"
+    log_start_regex: '^\[\d{1,2}\.\d{1,2}\s+\d{2}:\d{2}:\d{2}\]'
+
+  android:
+    description: "Android log (e.g., 03-17 16:13:38.811 ...)"
+    log_start_regex: '^\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\.\d{3}'
+
+  healthapp:
+    description: "HealthApp log (e.g., 20171223-22:15:29:606|...)"
+    log_start_regex: '^\d{8}-\d{2}:\d{2}:\d{2}:\d{3}\|'
+
+  hpc:
+    description: "HPC state log (e.g., 134681 node-246 ...)"
+    log_start_regex: '^\d+\s+node-\d+'
