@@ -2,7 +2,7 @@ from src.log.guardians.app.features.chunking.chunker import load_config, chunk_l
 
 
 def main():
-    config = load_config('config/chunker_config.yaml')
+    config = load_config('src/log/guardians/app/main/config/chunker_config.yaml')
     chunk_log_file(config)
 
 
