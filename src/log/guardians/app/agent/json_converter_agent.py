@@ -86,6 +86,10 @@ async def run_conversion():
                 f"Process this log file: {file_path}. Read it, parse it using the schema, and save it."
             )
 
+            # Break after processing 5 files for testing
+            if i >=5:
+                break
+
     except Exception as e:
         print(f"\nAn error occurred: {e}")
         import traceback

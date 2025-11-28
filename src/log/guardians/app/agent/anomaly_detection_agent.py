@@ -115,6 +115,10 @@ async def run_anomaly_detection():
             else:
                 print(f"✅ No anomalies found in {filename}.")
 
+            # Break after processing 5 files for testing
+            if i >=5:
+                break
+
         print("\n" + "=" * 60)
         print(f"Analysis Complete. Found anomalies in {anomalies_found_count} files.")
         print("=" * 60)
