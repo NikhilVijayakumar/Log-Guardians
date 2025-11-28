@@ -13,7 +13,6 @@ load_dotenv()
 from google.adk.models.google_llm import Gemini
 from google.adk.runners import InMemoryRunner
 from google.genai import types
-from google.adk.a2a.utils.agent_to_a2a import to_a2a
 from src.log.guardians.app.agent.tools import run_log_generator
 
 retry_config=types.HttpRetryOptions(
