@@ -6,7 +6,6 @@ from typing import Dict, List, Any
 
 # Ensure we can import modules from src when running from project root
 sys.path.append(os.getcwd())
-
 from dotenv import load_dotenv
 from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini

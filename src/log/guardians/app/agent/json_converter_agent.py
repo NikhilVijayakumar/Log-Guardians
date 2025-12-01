@@ -1,13 +1,11 @@
 import asyncio
 import sys
 import os
-import yaml
-import json
 from typing import Dict, Any, List
 
 # Ensure we can import modules from src when running from project root
 sys.path.append(os.getcwd())
-
+import traceback
 from dotenv import load_dotenv
 from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
@@ -30,7 +28,7 @@ retry_config = types.HttpRetryOptions(
 )
 
 model = Gemini(
-    model="gemini-2.5-flash-lite",
+    model="gemini-2.5-flash",
     retry_options=retry_config
 )
 
@@ -92,7 +90,7 @@ async def run_conversion():
 
     except Exception as e:
         print(f"\nAn error occurred: {e}")
-        import traceback
+        
         traceback.print_exc()
         raise
 
