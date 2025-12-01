@@ -5,6 +5,7 @@ import json
 from typing import Dict, Any, List
 from collections import Counter
 from src.log.guardians.app.main.main import load_config, chunk_log_file
+from src.log.guardians.app.utils.json_cleaner import clean_json_content
 
 def run_log_generator() -> str:
     """Runs the main log generation script to create fresh logs."""
@@ -43,7 +44,6 @@ def structure_architect_tool(config_path: str = "src/log/guardians/app/main/conf
 
 def get_log_files_tool(config_path: str = "src/log/guardians/app/main/config/chunker_config.yaml") -> List[str]:
     """Returns a list of all log files in the directory."""
-    import os
 
     # Read config to get dynamic path
     with open(config_path, 'r') as f:
@@ -74,8 +74,6 @@ def read_file_tool(file_path: str) -> str:
 
 def save_json_tool(data: list, original_file_path: str, schema_keys: list = None) -> str:
     """Saves the structured JSON data."""
-    import os
-    import json
 
     filename = os.path.basename(original_file_path).replace(".log", ".json")
     output_dir = os.path.abspath(".LogGuardians/output_json_structured_logs")
@@ -83,6 +81,10 @@ def save_json_tool(data: list, original_file_path: str, schema_keys: list = None
     output_path = os.path.join(output_dir, filename)
 
     try:
+        if isinstance(data, str):
+            cleaned_data = clean_json_content(data)
+            data = json.loads(cleaned_data)
+            
         final_data = data
         if schema_keys:
             # Enforce dynamic key order
@@ -104,7 +106,7 @@ def save_json_tool(data: list, original_file_path: str, schema_keys: list = None
 
 def read_json_file_tool(file_path: str) -> Dict[str, Any]:
     """Reads a specific JSON file and returns its content."""
-    import json
+
     try:
         with open(file_path, 'r') as f:
             return json.load(f)
@@ -113,7 +115,6 @@ def read_json_file_tool(file_path: str) -> Dict[str, Any]:
 
 def get_json_files_tool(json_dir: str = ".LogGuardians/output_json_structured_logs") -> List[str]:
     """Returns a list of all JSON files in the directory."""
-    import os
     abs_dir = os.path.abspath(json_dir)
     json_files = []
     for root, _, files in os.walk(abs_dir):
@@ -124,8 +125,6 @@ def get_json_files_tool(json_dir: str = ".LogGuardians/output_json_structured_lo
 
 def save_anomaly_json_tool(data: Dict[str, Any], original_filename: str) -> str:
     """Saves the anomaly report to a JSON file."""
-    import json
-    import os
     from datetime import datetime
 
     # Create output directory
@@ -138,6 +137,14 @@ def save_anomaly_json_tool(data: Dict[str, Any], original_filename: str) -> str:
     output_path = os.path.join(output_dir, filename)
 
     # Add metadata
+    # Add metadata
+    try:
+        if isinstance(data, str):
+            cleaned_data = clean_json_content(data)
+            data = json.loads(cleaned_data)
+    except Exception as e:
+        return {"error": f"Error parsing anomaly JSON: {str(e)}"}
+
     data["file"] = original_filename
     data["timestamp_analyzed"] = datetime.now().isoformat()
 
