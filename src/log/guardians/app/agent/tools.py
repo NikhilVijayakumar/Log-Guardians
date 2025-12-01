@@ -26,8 +26,8 @@ def structure_architect_tool(config_path: str = "src/log/guardians/app/main/conf
             config = yaml.safe_load(f)
 
         # Read dynamic values from config
-        active_profile = config.get('active_profile', 'hpc')
-        sample_log_path = config.get('input_log_file', 'data/logs/HPC_2k.log')
+        active_profile = config.get('active_profile')
+        sample_log_path = config.get('input_log_file')
         regex_pattern = config['log_profiles'][active_profile]['log_start_regex']
 
         with open(sample_log_path, 'r', errors='replace') as f:
@@ -49,8 +49,8 @@ def get_log_files_tool(config_path: str = "src/log/guardians/app/main/config/chu
     with open(config_path, 'r') as f:
         config = yaml.safe_load(f)
 
-    active_profile = config.get('active_profile', 'hpc')
-    log_file_name = config.get('input_log_file', 'data/logs/Linux_2k.log').split('/')[-1].replace('.log', '')
+    active_profile = config.get('active_profile')
+    log_file_name = config.get('input_log_file').split('/')[-1].replace('.log', '')
 
     # Build path: .LogGuardians/output/logs/{profile}/{log_file_name}/
     log_dir = f".LogGuardians/output/logs/{active_profile}/{log_file_name}"
